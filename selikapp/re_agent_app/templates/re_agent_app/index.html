@@ -1,0 +1,160 @@
+{% extends "re_agent_app/base.html" %}
+{% load static %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block content %}
+
+<!-- =======================
+     GOOGLE MAP (RGPD SAFE)
+======================== -->
+<div class="mb-4">
+    <iframe
+        class="w-100 rounded shadow-sm"
+        style="height: 300px; border:0;"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.9999999999!2d2.3522219!3d48.856614"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen>
+    </iframe>
+</div>
+
+<!-- =======================
+     CAROUSEL — LAST BIENS
+======================== -->
+<div id="biensCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
+    
+    <div class="carousel-inner">
+        {% for bien in latest_biens %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                
+                {% if bien.photo %}
+                    <img src="{{ bien.photo.url }}" class="d-block w-100" style="height:350px; object-fit:cover;" alt="{{ bien.titre }}">
+                {% else %}
+                    <img src="{% static 're_agent_app/placeholder_bien.jpg' %}" class="d-block w-100" style="height:350px; object-fit:cover;" alt="Image par défaut">
+                {% endif %}
+
+                <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded px-3 py-2">
+                    <h5 class="mb-1">{{ bien.bien_titre }}</h5>
+                    <small>{{ bien.bien_adresse }}</small>
+                </div>
+            </div>
+        {% empty %}
+            <div class="carousel-item active">
+                <img src="{% static 're_agent_app/placeholder_bien.jpg' %}" class="d-block w-100" style="height:350px; object-fit:cover;">
+                <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded px-3 py-2">
+                    <h5 class="mb-1">Aucun bien disponible</h5>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#biensCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#biensCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </button>
+
+</div>
+
+<!-- =======================
+     3 COLUMNS SECTION
+======================== -->
+<div class="row mb-4">
+
+    <!-- Last Mandates -->
+    <div class="col-md-4 mb-3">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-success text-white">Derniers Mandats</div>
+            <ul class="list-group list-group-flush">
+                {% for m in derniers_mandats %}
+                    <li class="list-group-item">
+                        <strong>{{ m.reference }}</strong><br>
+                        <small class="text-muted">{{ m.client }}</small>
+                    </li>
+                {% empty %}
+                    <li class="list-group-item text-muted">Aucun mandat</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- Last Visits -->
+    <div class="col-md-4 mb-3">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-success text-white">Dernières Visites</div>
+            <ul class="list-group list-group-flush">
+                {% for v in dernieres_visites %}
+                    <li class="list-group-item">
+                        <strong>{{ v.bien.bien_titre }}</strong><br>
+                        <small class="text-muted">
+                            {{ v.date|date:"d/m/Y H:i" }} — {{ v.visiteur }}
+                        </small>
+                    </li>
+                {% empty %}
+                    <li class="list-group-item text-muted">Aucune visite</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- Last Commercial Actions -->
+    <div class="col-md-4 mb-3">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-success text-white">Dernières Actions Commerciales</div>
+            <ul class="list-group list-group-flush">
+                {% for a in dernieres_actions %}
+                    <li class="list-group-item">
+                        <strong>{{ a.titre }}</strong><br>
+                        <small class="text-muted">
+                            {{ a.date|date:"d/m/Y" }} — {{ a.bien }}
+                        </small>
+                    </li>
+                {% empty %}
+                    <li class="list-group-item text-muted">Aucune action commerciale</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<!-- =======================
+     CHANGELOG SECTION
+======================== -->
+<div class="card mb-4 shadow-sm">
+    <div class="card-header bg-secondary text-white">Historique des changements</div>
+    <div class="card-body">
+
+        <ul class="list-unstyled mb-0">
+
+            {% for h in changelog %}
+                <li class="mb-3">
+
+                    <small class="text-muted">
+                        {{ h.timestamp|date:"d/m/Y H:i" }}
+                    </small>
+
+                    — <strong>{{ h.get_object_type_display }}</strong>
+                    #{{ h.object_id }} : {{ h.action }}
+
+                    {% if h.user %}
+                        par {{ h.user.get_full_name|default:h.user.username }}
+                    {% endif %}
+
+                    <div class="text-muted small mt-1">
+                        {{ h.changes|truncatechars:140 }}
+                    </div>
+
+                </li>
+            {% empty %}
+                <li class="text-muted">Aucun changement enregistré.</li>
+            {% endfor %}
+
+        </ul>
+
+    </div>
+</div>
+
+{% endblock %}

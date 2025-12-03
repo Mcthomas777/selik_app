@@ -1,0 +1,119 @@
+{% extends "re_agent_app/base.html" %}
+{% load static %}
+{% block title %}Ajouter un Contact{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <h1 class="mb-4">Ajouter un Contact</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <!-- Identité -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+                <h5 class="mb-0">Identité du Contact</h5>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        {{ form.contact_type.label_tag }} {{ form.contact_type }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form.contact_status.label_tag }} {{ form.contact_status }}
+                    </div>
+
+                    <div class="col-md-6">
+                        {{ form.contact_first_name.label_tag }} {{ form.contact_first_name }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form.contact_name.label_tag }} {{ form.contact_name }}
+                    </div>
+
+                    <div class="col-md-6">
+                        {{ form.contact_nego.label_tag }} {{ form.contact_nego }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Coordonnées -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+                <h5 class="mb-0">Coordonnées</h5>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        {{ form.contact_email.label_tag }} {{ form.contact_email }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form.contact_telephone.label_tag }} {{ form.contact_telephone }}
+                    </div>
+
+                    <div class="col-md-12">
+                        {{ form.contact_adress.label_tag }} {{ form.contact_adress }}
+                    </div>
+                    <div class="col-md-12">
+                        {{ form.contact_complement_adress.label_tag }} {{ form.contact_complement_adress }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Informations supplémentaires -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+                <h5 class="mb-0">Commentaires & Notes</h5>
+            </div>
+            <div class="card-body">
+                {{ form.contact_commentar.label_tag }}
+                {{ form.contact_commentar }}
+            </div>
+        </div>
+
+        <!-- Critères de recherche -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+                <h5 class="mb-0">Critères de Recherche</h5>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+                        {{ form.contact_cr_type_search.label_tag }} {{ form.contact_cr_type_search }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form.contact_cr_type_estatse.label_tag }} {{ form.contact_cr_type_estatse }}
+                    </div>
+
+                    <div class="col-md-6">
+                        {{ form.contact_cr_budget.label_tag }} {{ form.contact_cr_budget }}
+                    </div>
+
+                    <div class="col-md-6">
+                        {{ form.contact_cr_room_number.label_tag }} {{ form.contact_cr_room_number }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form.contact_cr_bedroom_number.label_tag }} {{ form.contact_cr_bedroom_number }}
+                    </div>
+
+                    <div class="col-md-6">
+                        {{ form.contact_cr_surface.label_tag }} {{ form.contact_cr_surface }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form.contact_cr_surface_terrain.label_tag }} {{ form.contact_cr_surface_terrain }}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <button class="btn btn-primary w-100" type="submit">
+            Créer le contact
+        </button>
+
+    </form>
+</div>
+{% endblock %}

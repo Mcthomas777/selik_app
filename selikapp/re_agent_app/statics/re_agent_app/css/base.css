@@ -1,0 +1,165 @@
+/* -------------------------------------------
+   SELIKA THEME – Green Navbar & Clean UI
+-------------------------------------------- */
+
+/* Global */
+body {
+    background-color: #f7f9fa;
+    font-family: 'Inter', 'Roboto', 'Helvetica', sans-serif;
+    color: #333;
+}
+
+/* NAVBAR COLOR */
+.selika-navbar {
+    background-color: #02866b; /* closest match to screenshot */
+    height: 48px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+/* LOGO */
+.selika-logo {
+    height: 38px;
+    width: auto;
+    border-radius: 8px;
+}
+
+/* DROPDOWNS */
+.selika-dropdown::after {
+    color: yellow;
+    margin-left: .3rem;
+}
+
+.selika-create {
+    color: white !important;
+    font-weight: 600;
+}
+
+.selika-plus {
+    color: yellow;
+    margin-right: 4px;
+}
+
+/* SEARCH BAR */
+.selika-search-container .input-group-text {
+    background: transparent;
+    border-right: 0;
+    color: white;
+}
+
+.selika-search {
+    background: transparent;
+    border-left: 0;
+    color: white;
+}
+
+.selika-search::placeholder {
+    color: #d9f5ed;
+}
+
+.selika-search-caret {
+    background: transparent;
+    border-left: 0;
+    color: white;
+}
+
+/* PROFILE PICTURE */
+.selika-profile {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+
+/* Buttons */
+.btn-primary {
+    background-color: #1A9A5C;
+    border-color: #157c48;
+}
+
+.btn-primary:hover {
+    background-color: #157c48;
+}
+
+/* Support button */
+.btn-outline-info {
+    color: white;
+    border-color: #d2fff3;
+}
+
+.btn-outline-info:hover {
+    background-color: white;
+    color: #1A9A5C;
+}
+
+/* Cards */
+.card {
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.card-header {
+    background: #1A9A5C;
+    color: white;
+    font-weight: 600;
+    border-radius: 12px 12px 0 0 !important;
+}
+
+/* Lists */
+.list-group-item {
+    border: none;
+    padding: 12px 16px;
+    border-bottom: 1px solid #eee;
+}
+
+.list-group-item:last-child {
+    border-bottom: none;
+}
+
+/* Carousel */
+.carousel-img {
+    height: 350px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.carousel-caption {
+    border-radius: 8px;
+}
+
+/* Map */
+.map-embed {
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* History */
+.history-row small {
+    color: #6c757d;
+}
+
+.history-row {
+    padding: 6px 0;
+    border-bottom: 1px dashed #ddd;
+}
+
+.history-row:last-child {
+    border-bottom: none;
+}
+
+
+/* Placeholder for future custom styles */
+.card {
+    border-radius: 12px;
+}
+
+.card-header {
+    background: #f7f7f7;
+    font-weight: 600;
+}
+
+form label {
+    font-weight: 500;
+}

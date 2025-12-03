@@ -1,0 +1,110 @@
+{% load static %}
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Selika - {% block title %}{% endblock %}</title>
+  <!-- Bootstrap 5 CSS CDN (or serve locally) -->
+  <link rel="stylesheet" href="{% static 're_agent_app/css/base.css' %}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark selika-navbar">
+  <div class="container-fluid">
+
+    <!-- Logo + Name -->
+    <a class="navbar-brand d-flex align-items-center" href="#">
+      <img src="{% static 'properties/logo.png' %}" class="selika-logo me-2" alt="logo">
+      <strong>SELIKA</strong><span class="ms-1 fw-light">PP</span>
+    </a>
+
+    <!-- Left actions -->
+    <ul class="navbar-nav ms-3 align-items-center">
+
+      <!-- Rechercher dropdown -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle selika-dropdown" href="#" data-bs-toggle="dropdown">
+          <span class="text-light">RECHERCHER</span>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">Biens (tous)</a></li>
+          <li><a class="dropdown-item" href="#">Biens (filtrés)</a></li>
+          <li><a class="dropdown-item" href="#">Biens (cube)</a></li>
+          <li><a class="dropdown-item" href="#">Biens (multi critères)</a></li>
+        </ul>
+      </li>
+
+      <!-- Créer -->
+      <li class="nav-item dropdown ms-3">
+        <a class="nav-link dropdown-toggle selika-dropdown" href="#" data-bs-toggle="dropdown">
+          CRÉER
+        </a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="{% url 're_agent_app:add_estate' %}">Bien</a></li>
+          <li><a class="dropdown-item" href="{% url 're_agent_app:add_contact' %}">Contact</a></li>
+          <li><a class="dropdown-item" href="#">Mandat</a></li>
+        </ul>
+      </li>
+
+    </ul>
+
+    <!-- Search bar (center) -->
+    <form class="d-flex mx-auto selika-search-container" method="get" style="width: 35%;">
+      <div class="input-group">
+        <span class="input-group-text selika-search-icon">
+          🔍
+        </span>
+        <input type="search" name="q" class="form-control selika-search" placeholder="Recherche...">
+        <button class="btn selika-search-caret dropdown-toggle" data-bs-toggle="dropdown"></button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><a class="dropdown-item" href="#">Filtre A</a></li>
+          <li><a class="dropdown-item" href="#">Filtre B</a></li>
+        </ul>
+      </div>
+    </form>
+
+    <!-- Icons on right -->
+    <ul class="navbar-nav ms-auto align-items-center">
+
+      <li class="nav-item mx-2">
+        <a class="nav-link text-light" href="#">✔</a>
+      </li>
+
+      <li class="nav-item mx-2">
+        <a class="nav-link text-light" href="#">▦</a>
+      </li>
+
+      <li class="nav-item mx-2">
+        <a class="nav-link text-light" href="#">?</a>
+      </li>
+
+      <!-- Profile -->
+      <li class="nav-item dropdown ms-3">
+        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" data-bs-toggle="dropdown">
+          <img src="{% static 'properties/default_profile.jpg' %}" class="selika-profile" alt="profile">
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><a class="dropdown-item" href="#">Mon profil</a></li>
+          <li><a class="dropdown-item" href="#">Paramètres</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="{% url 'admin:logout' %}">Déconnexion</a></li>
+        </ul>
+      </li>
+
+    </ul>
+
+  </div>
+</nav>
+
+
+<main class="container my-4">
+  {% block content %}{% endblock %}
+</main>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

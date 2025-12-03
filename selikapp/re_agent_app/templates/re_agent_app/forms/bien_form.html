@@ -1,0 +1,90 @@
+{% extends "re_agent_app/base.html" %}
+{% load static %}
+{% block title %}Ajouter un Bien{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <h1 class="mb-4">Ajouter un Bien</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <!-- Informations générales -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+                <h5 class="mb-0">Informations Générales</h5>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-6">{{ form.bien_type_tansaction.label_tag }} {{ form.bien_type_tansaction }}</div>
+                    <div class="col-md-6">{{ form.bien_type.label_tag }} {{ form.bien_type }}</div>
+
+                    <div class="col-md-6">{{ form.bien_info_complémentaire.label_tag }} {{ form.bien_info_complémentaire }}</div>
+                    <div class="col-md-6">{{ form.bien_status.label_tag }} {{ form.bien_status }}</div>
+
+                    <div class="col-md-12">{{ form.bien_titre.label_tag }} {{ form.bien_titre }}</div>
+
+                    <div class="col-md-12">{{ form.bien_description.label_tag }} {{ form.bien_description }}</div>
+
+                    <div class="col-md-6">{{ form.bien_surface.label_tag }} {{ form.bien_surface }}</div>
+                    <div class="col-md-6">{{ form.bien_surface_terrain.label_tag }} {{ form.bien_surface_terrain }}</div>
+
+                    <div class="col-md-6">{{ form.bien_négociateur.label_tag }} {{ form.bien_négociateur }}</div>
+                    <div class="col-md-6">
+                        <label class="form-check-label">{{ form.bien_diffusé.label }}</label><br>
+                        {{ form.bien_diffusé }}
+                    </div>
+
+                    <div class="col-md-6">{{ form.bien_numéro_clé.label_tag }} {{ form.bien_numéro_clé }}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Informations Financières -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+                <h5 class="mb-0">Informations Financières</h5>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+
+                    <div class="col-md-6">{{ form.bien_prix_hors_honoraires.label_tag }} {{ form.bien_prix_hors_honoraires }}</div>
+                    <div class="col-md-6">{{ form.bien_honoraires.label_tag }} {{ form.bien_honoraires }}</div>
+
+                    <div class="col-md-6">{{ form.bien_taux_commision.label_tag }} {{ form.bien_taux_commision }}</div>
+                    <div class="col-md-6">{{ form.bien_prix.label_tag }} {{ form.bien_prix }}</div>
+
+                    <div class="col-md-6">{{ form.bien_charge_honoraire.label_tag }} {{ form.bien_charge_honoraire }}</div>
+
+                    <div class="col-md-6">{{ form.bien_taxe_foncière.label_tag }} {{ form.bien_taxe_foncière }}</div>
+                    <div class="col-md-6">{{ form.bien_taxe_habitation.label_tag }} {{ form.bien_taxe_habitation }}</div>
+                    <div class="col-md-6">{{ form.bien_charge_mensuelle.label_tag }} {{ form.bien_charge_mensuelle }}</div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Localisation & Contacts -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+                <h5 class="mb-0">Localisation & Contacts</h5>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+
+                    <div class="col-md-12">{{ form.bien_adresse.label_tag }} {{ form.bien_adresse }}</div>
+                    <div class="col-md-12">{{ form.bien_complement_adresse.label_tag }} {{ form.bien_complement_adresse }}</div>
+
+                    <div class="col-md-12">{{ form.bien_contacts.label_tag }} {{ form.bien_contacts }}</div>
+
+                </div>
+            </div>
+        </div>
+
+        <button class="btn btn-primary w-100" type="submit">Créer le Bien</button>
+    </form>
+
+</div>
+{% endblock %}
+
