@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
 
-from .models import Bien, Mandat, Visite, ActionCommerciale, ChangeLog
-from .forms import BienForm, ContactForm
+from .models import Property, Mandat, Visite, ActionCommerciale, ChangeLog, BienImage
+from .forms import BienForm, ContactForm, BienImageForm
 
 
 def index(request):
-    latest_biens = Bien.objects.order_by('-bien_created_at')[:3]
+    latest_biens = Property.objects.order_by('-bien_created_at')[:3]
     derniers_mandats = Mandat.objects.order_by('-created_at')[:5]
     dernieres_visites = Visite.objects.order_by('-created_at')[:5]
     dernieres_actions = ActionCommerciale.objects.order_by('-created_at')[:5]
@@ -14,9 +14,9 @@ def index(request):
     query = request.GET.get('q', '')
     if query:
         # basic search across title and address
-        latest_biens = Bien.objects.filter(
+        latest_biens = Property.objects.filter(
             # models.Q(titre__icontains=query) | models.Q(adresse__icontains=query)
-        ).order_by('-biencreated_at')[:10]
+        ).order_by('-property_created_at')[:10]
 
     context = {
         'latest_biens': latest_biens,
@@ -31,13 +31,30 @@ def index(request):
 def add_estate(request):
     if request.method == "POST":
         form = BienForm(request.POST)
+        image_form = BienImageForm(request.POST, request.FILES)
+
         if form.is_valid():
             bien = form.save()
-            return redirect("bien_detail", pk=bien.pk)  # redirect to detail page
+
+            files = request.FILES.getlist("bien_image")
+
+            for idx, file in enumerate(files):
+                BienImage.objects.create(
+                    bien_parent=bien,
+                    bien_image=file,
+                    bien_image_vitrine=(idx == 0)  # First image = vitrine
+                )
+
+            return redirect("bien_detail", pk=bien.pk)
+
     else:
         form = BienForm()
+        image_form = BienImageForm()
 
-    return render(request, "re_agent_app/forms/bien_form.html", {"form": form})
+    return render(request, "re_agent_app/forms/bien_form.html", {
+        "form": form,
+        "image_form": image_form,
+    })
 
 def add_contact(request):
     if request.method == "POST":

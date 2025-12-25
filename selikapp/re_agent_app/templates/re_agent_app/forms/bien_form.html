@@ -2,6 +2,7 @@
 {% load static %}
 {% block title %}Ajouter un Bien{% endblock %}
 
+
 {% block content %}
 <div class="container mt-4">
 
@@ -9,6 +10,14 @@
 
     <form method="POST">
         {% csrf_token %}
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+                <h5 class="mb-0">Images du bien</h5>
+            </div>
+            <p>La première image sera marquée comme <strong>vitrine</strong>.</p>
+            {{ image_form.bien_image }}
+        </div>
+
 
         <!-- Informations générales -->
         <div class="card mb-4 shadow-sm">

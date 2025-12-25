@@ -1,9 +1,26 @@
 from django import forms
-from .models import Bien, Contact
+
+from .constants import (
+    PROPERTY_STATUS_CHOICES,
+    TRANSACTION_TYPE_CHOICES,
+    MANDATS_STATUS_CHOICES,
+    PROPERTY_TYPE_CHOICES,
+)
+
+from .models import Property, Contact, BienImage, Negociator, City
+from .widgets import MultipleFileInput
+
+
+class BienImageForm(forms.Form):
+    bien_image = forms.FileField(
+        widget=MultipleFileInput(attrs={"class": "form-control", "multiple": True}),
+        required=False
+    )
+
 
 class BienForm(forms.ModelForm):
     class Meta:
-        model = Bien
+        model = Property
         fields = "__all__"  # include everything
 
         widgets = {
@@ -71,3 +88,55 @@ class ContactForm(forms.ModelForm):
             "contact_cr_surface": forms.NumberInput(attrs={"class": "form-control"}),
             "contact_cr_surface_terrain": forms.NumberInput(attrs={"class": "form-control"}),
         }
+
+
+class Filtering_1(forms.Form):
+    negociators = forms.ModelMultipleChoiceField(
+        queryset=Negociator.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        label="Négociateurs",
+        required=False
+    )
+    property_status = forms.ChoiceField(
+        choices=PROPERTY_STATUS_CHOICES,
+        widget=forms.Select(attrs={"class": "form-select"}),
+        label="Statut bien",
+        initial='actif',
+    )
+    mandat = forms.MultipleChoiceField(
+        choices=MANDATS_STATUS_CHOICES,
+        widget=forms.CheckboxSelectMultiple,
+        label="Mandats",
+        initial='en_cours',
+    )
+    transaction_type = forms.ChoiceField(
+        choices=TRANSACTION_TYPE_CHOICES,
+        widget=forms.Select(attrs={"class": "form-select"}),
+        label="Type de transaction",
+    )
+    property_type = forms.MultipleChoiceField(
+        choices=PROPERTY_TYPE_CHOICES,
+        widget=forms.CheckboxSelectMultiple,
+        label="Type ",
+    )
+    city = forms.ModelMultipleChoiceField(
+        queryset=City.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        label="Villes",
+        required=False
+    )
+    price_min = forms.DecimalField()
+    price_max = forms.DecimalField()
+    number_room_min = forms.IntegerField()
+    number_room_max = forms.IntegerField()
+    number_bedroom_min = forms.IntegerField()
+    number_bedroom_max = forms.IntegerField()
+    surface_min = forms.FloatField()
+    surface_max = forms.FloatField()
+    surface_terrain_min = forms.FloatField()
+    surface_terrain_max = forms.FloatField()
+
+
+
+
+

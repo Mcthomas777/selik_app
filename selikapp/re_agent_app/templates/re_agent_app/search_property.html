@@ -1,0 +1,125 @@
+{% extends 're_agent_app/base.html' %}
+{% load static %}
+
+{% block title %}Filtres Biens{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/filters_1.css' %}">
+
+<div class="filter-container">
+    <form id="filter-form">
+        <div class="filter-grid">
+
+            <div class="filter-group">
+                <label>Négociateurs</label>
+                <div class="checkbox-list">
+                    {{ form.negociators }}
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <label>Statut bien</label>
+                {{ form.property_status }}
+            </div>
+
+            <div class="filter-group">
+                <label>Mandats</label>
+                <div class="checkbox-list">
+                    {{ form.mandat }}
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <label>Type de transaction</label>
+                {{ form.transaction_type }}
+            </div>
+
+            <div class="filter-group">
+                <label>Type de bien</label>
+                <div class="checkbox-list">
+                    {{ form.property_type }}
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <label>Villes</label>
+                <div class="checkbox-list">
+                    {{ form.city }}
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <label>Prix (€)</label>
+                <div class="range-field">
+                    {{ form.price_min }} 
+                    {{ form.price_max }}
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <label>Pièces</label>
+                <div class="range-field">
+                    {{ form.number_room_min }}
+                    {{ form.number_room_max }}
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <label>Chambres</label>
+                <div class="range-field">
+                    {{ form.number_bedroom_min }}
+                    {{ form.number_bedroom_max }}
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <label>Surface habitable (m²)</label>
+                <div class="range-field">
+                    {{ form.surface_min }}
+                    {{ form.surface_max }}
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <label>Surface terrain (m²)</label>
+                <div class="range-field">
+                    {{ form.surface_terrain_min }}
+                    {{ form.surface_terrain_max }}
+                </div>
+            </div>
+
+        </div>
+
+        <button id="reset-btn" type="button">Réinitialiser</button>
+    </form>
+</div>
+
+<div class="results-container" id="results">
+    <h3>Résultats</h3>
+    <div id="results-list">
+        {% include 'partials/results_list.html' %}
+    </div>
+</div>
+
+<script>
+document.getElementById('filter-form').addEventListener('change', function () {
+    const data = new FormData(this);
+
+    fetch("{% url 'filter-results-endpoint' %}", {
+        method: "POST",
+        body: data,
+        headers: { "X-CSRFToken": "{{ csrf_token }}" }
+    })
+    .then(res => res.text())
+    .then(html => {
+        document.getElementById("results-list").innerHTML = html;
+    });
+});
+
+document.getElementById('reset-btn').addEventListener('click', function () {
+    document.getElementById('filter-form').reset();
+    document.getElementById('filter-form').dispatchEvent(new Event('change'));
+});
+</script>
+
+{% endblock %}

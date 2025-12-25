@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import Bien, Contact, Mandat, Visite, ActionCommerciale, ChangeLog
+from .models import Property, Contact, Mandat, Visite, ActionCommerciale, ChangeLog
 
 
-@admin.register(Bien)
+@admin.register(Property)
 class BienAdmin(admin.ModelAdmin):
 
     list_display = (
